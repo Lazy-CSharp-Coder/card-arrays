@@ -175,7 +175,7 @@ const pokeFacts = [
     dex: "It slips into the shadows of others and mimics their powers and movements. As it improves, it becomes stronger than those it's imitating."}
 ];
 
-// Set up the card grid to populate for each item in the pokeFacts array
+// Set up the card grid to populate for each item in the pokeFacts array d
 
 const gridContainer = document.querySelector("#gridContainer");
 
