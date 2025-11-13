@@ -175,16 +175,38 @@ const pokeFacts = [
     dex: "It slips into the shadows of others and mimics their powers and movements. As it improves, it becomes stronger than those it's imitating."}
 ];
 
-// Set up the card grid to populate for each item in the pokeFacts array d
+// Set up the card grid to populate for each item in the pokeFacts array
 
 const gridContainer = document.querySelector("#gridContainer");
 
 // Get show more button
+
+const  heading = document.querySelector("h1");
+heading.classList.add(selectAnimation(1));
+
 const showMoreButton = document.querySelector("#showMoreButton");
+// showMoreButton.classList.add(selectAnimation());
 
 // Show more?
 let cardBatch = 6;
 let visibleBatch = 0;
+
+
+function getUserSettings(userId)
+{
+  if(userId == "Erin") return  { animHeading : 2, animPoke : 0, font : "Times New Roman" }
+   else if(userId == "Harald") return { animHeading : 1, animPoke: 2, font : "Underdog"  }
+        else return { animHeading: 0, animPoke : 0, font : "Sans Serif"} ;  // default
+  
+}
+
+function selectAnimation(animNumber)
+{
+   if(animNumber == 1) return "rotateXAnim";
+   else if(animNumber == 2) return "rotateYAnim";
+   else return "slideDownAnim";
+
+}
 
 // Show more? Set up the function that controls how many show, the loop should be in this function
 function showMoreCards() {
@@ -193,18 +215,22 @@ function showMoreCards() {
   // Instead of referencing the whole array, reference this which cuts out a slice of 6 from the array
   const arrayBatch = pokeFacts.slice(visibleBatch, visibleBatch + cardBatch);
 
+  const user = getUserSettings("Harald");
   // Let the variable pokeIndex start at the value 0; then if pokeIndex value is less than the length of pokeFacts; increase the value of pokeIndex by 1
   for ( let pokeIndex = 0; pokeIndex < arrayBatch.length; pokeIndex++) {
     const pokeMon = arrayBatch[pokeIndex];
     console.log(`---- Checking PokeCardsInfo Loop ----`);
     console.log(pokeMon.name);
 
+
     // Start building HTML elements
 
     // Create card div
     const listItem = document.createElement("div");
     listItem.classList.add("grid", "pokeCard");
-
+    listItem.classList.add(selectAnimation(user.animPoke));
+    // else if(pokeIndex % 3) listItem.classList.add(selectAnimation(2));
+    
       // Error message - Checking if div has any children, if not, show error
       const errorDiv = document.querySelector("#errorDiv");
       console.log(errorDiv);
@@ -214,12 +240,12 @@ function showMoreCards() {
         errorDiv.classList.add("flex");
       }
 
-    listItem.style.opacity = "0";
+    // listItem.style.opacity = "0";
     listItem.style.animationDelay = (pokeIndex * .1) + "s";
 
     // Get sprite
     const pokeSprite = document.createElement("img");
-    pokeSprite.src = pokeMon.imgSrc;
+    // pokeSprite.src = pokeMon.imgSrc;
     pokeSprite.classList.add("gridImg");
 
     // Get name
@@ -238,7 +264,7 @@ function showMoreCards() {
 
       // Create img element for types
       const pokeTypeImg = document.createElement("img");
-      pokeTypeImg.src = pokeType[typeArray];
+      // pokeTypeImg.src = pokeType[typeArray];
 
       // Append types img element
       typesDiv.appendChild(pokeTypeImg);
